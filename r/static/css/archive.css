@@ -1,0 +1,103 @@
+footer {
+    text-align: center;
+}
+
+/* markdown */
+.md {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.md p, .md ol, .md ul, .md blockquote {
+    margin: 3px 0;
+}
+.md blockquote {
+    border-left: 2px solid rgba(255, 255, 255, 0.4); /* text-muted */
+    padding-left: 0.5rem;
+}
+.md blockquote, .md del {
+    color: rgba(255, 255, 255, 0.4); /* text-muted */
+}
+.md code, .md pre {
+    border: 1px solid #4E5D6C; /* alert-secondary */
+    background: #4E5D6C; /* disabled form input color */
+}
+.md h1 {
+    font-size: 1.5rem;
+}
+.md h2 {
+    font-size: 1.4rem;
+}
+.md h3 {
+    font-size: 1.3rem;
+}
+.md h4 {
+    font-size: 1.2rem;
+}
+.md h5 {
+    font-size: 1.1rem;
+}
+.md h6 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* subreddit links */
+.links .title {
+    line-height: 1.25;
+}
+.links .title a, .submission .title a {
+    color: inherit;
+}
+.search .title {
+    color: inherit;
+    display: block;
+}
+
+/* link/post page */
+.op .author, .submission .author {
+    color: #5bc0de; /* match bootstrap link color / badge-primary */
+}
+.submission .card-body {
+    padding: 1rem;
+}
+
+/* comments */
+.comment {
+    margin-bottom: 5px; /*1rem;*/
+}
+.comment .byline, .comment .byline a {
+    line-height: 1;
+}
+.collapsed .md {
+    display: none;
+}
+.hidden {
+    display: none;
+}
+.to-top {
+    display: block;
+}
+.comments .ml-1 {
+    margin-left: 1rem !important;
+}
+.comments .ml-2 {
+    margin-left: 2rem !important;
+}
+.comments .ml-3 {
+    margin-left: 3rem !important;
+}
+.comments .ml-4 {
+    margin-left: 4rem !important;
+}
+.comments .ml-5 {
+    margin-left: 5rem !important;
+}
+.comments .ml-6 {
+    margin-left: 6rem !important;
+}
+.comments .ml-7 {
+    margin-left: 7rem !important;
+}
+.comments .ml-8 {
+    margin-left: 8rem !important;
+}

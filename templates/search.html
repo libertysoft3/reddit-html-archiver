@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="###INCLUDE_PATH###static/css/lato.css">
+    <link rel="stylesheet" href="###INCLUDE_PATH###static/css/bootstrap-superhero.min.css">
+    <link rel="stylesheet" href="###INCLUDE_PATH###static/css/archive.css">
+    <title>r/###SUB### ###TITLE###</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <a class="navbar-brand" href="###URL_IDX_SCORE###">r/###SUB###</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item ###URL_IDX_SCORE_CSS###">
+              <a class="nav-link" href="###URL_IDX_SCORE###">score</a>
+            </li>
+            <li class="nav-item ###URL_IDX_CMNT_CSS###">
+              <a class="nav-link" href="###URL_IDX_CMNT###">comments</a>
+            </li>
+            <li class="nav-item ###URL_IDX_DATE_CSS###">
+              <a class="nav-link" href="###URL_IDX_DATE###">date</a>
+            </li>
+            <li class="nav-item ###URL_SEARCH_CSS###">
+              <a class="nav-link" href="###URL_SEARCH###">search</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">subreddits</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="###URL_SUBS###">All</a>
+                ###HTML_SUBS_MENU###
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container-fluid">
+      <div class="links search mt-3">
+        ###HTML_LINKS###
+      </div>
+    </main>
+    <footer class="container-fluid">
+      <p class="small mb-0">r/###SUB### archive has ###ARCH_NUM_POSTS### posts and ###ARCH_NUM_COMMENTS### comments. <a href="###URL_PROJECT###">source code</a>.</p>
+    </footer>
+    <script src="###INCLUDE_PATH###static/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="###INCLUDE_PATH###static/js/bootstrap.min.js"></script>
+  </body>
+</html>

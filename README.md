@@ -16,12 +16,12 @@ requires python 3
     cd reddit-html-archiver
     chmod u+x *.py
 
-### fetch reddit data from pushshift
+### fetch reddit data
 
-data is fetched by subreddit and date range.
+data is fetched by subreddit and date range and is stored as csv files in `data`.
 
     ./fetch_links.py politics 2017-1-1 2017-2-1
-    # or add some link/post request parameters
+    # or add some link/post request filters
     ./fetch_links.py --self_only --score "> 2000" politics 2015-1-1 2016-1-1
     ./fetch_links.py -h
 
@@ -29,19 +29,20 @@ you may need decrease your date range or adjust `pushshift_rate_limit_per_minute
 
 ### write web pages
 
-write html files for all subreddits.
+write html files for all subreddits to `r`.
 
     ./write_html.py
     # or add some output filtering
     ./write_html.py --min-score 100 --min-comments 100 --hide-deleted-comments
     ./write_html.py -h
-    
 
-if you add more data later, delete everything in `r` aside from `r/static` and re-run the script to refresh your archive's pages.
+your html archive has been written to `r`. once you are satisfied with your archive feel free to copy/move the contents of `r` to elsewhere and to delete the git repos you have created. everything in `r` is fully self contained.
+
+to update an html archive, delete everything in `r` aside from `r/static` and re-run `write_html.py` to regenerate everything.
 
 ### hosting the archived pages
 
-copy the contents of the `r` directory to a web root or appropriately served git repo. or serve it directly.
+copy the contents of the `r` directory to a web root or appropriately served git repo.
 
 ### potential improvements
 
@@ -49,7 +50,9 @@ copy the contents of the `r` directory to a web root or appropriately served git
   * num_comments filtering
   * thumbnails or thumbnail urls
   * media posts
-  * update scores from the reddit api with [praw](https://github.com/praw-dev/praw)
+  * score update
+  * scores from reddit with [praw](https://github.com/praw-dev/praw)
+* view on reddit.com
 * real templating
 * filter output per sub, individual min score and comments filters
 * js markdown url previews
@@ -60,7 +63,7 @@ copy the contents of the `r` directory to a web root or appropriately served git
 
 ### see also
 
-* [pushshift](https://github.com/pushshift/api) [subreddit](https://www.reddit.com/r/pushshift/)
+* [pushshift](https://github.com/pushshift/api), [r/pushshift](https://www.reddit.com/r/pushshift/)
 * [psaw](https://github.com/dmarx/psaw)
 * [snudown](https://github.com/reddit/snudown)
 * [redditsearch.io](https://redditsearch.io/)

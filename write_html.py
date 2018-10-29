@@ -30,6 +30,7 @@ sort_indexes = {
         'slug': 'date',
     }
 }
+missing_comment_score_label = 'n/a'
 
 template_index = ''
 with open('templates/index.html', 'r') as file:
@@ -174,8 +175,8 @@ def write_subreddit_pages(subreddit, subs, link_index, stat_sub_filtered_links, 
                     '###TITLE###':              l['title'],
                     '###URL###':                link_url,
                     '###URL_COMMENTS###':       link_comments_url,
-                    '###SCORE###':              l['score'],
-                    '###NUM_COMMENTS###':       l['num_comments'] if int(l['num_comments']) > 0 else 0,
+                    '###SCORE###':              str(l['score']),
+                    '###NUM_COMMENTS###':       l['num_comments'] if int(l['num_comments']) > 0 else str(0),
                     '###DATE###':               datetime.utcfromtimestamp(int(l['created_utc'])).strftime('%Y-%m-%d'),
                     '###LINK_DOMAIN###':        '(self.' + l['subreddit'] + ')' if l['is_self'] is True or l['is_self'] == 'True' else '',
                     '###HTML_AUTHOR_URL###':    author_link_html,
@@ -264,7 +265,7 @@ def write_link_page(subreddits, link, subreddit='', hide_deleted_comments=False)
             '###PARENT_ID###':          c['parent_id'],
             '###DEPTH###':              str(c['depth']),
             '###DATE###':               created.strftime('%Y-%m-%d'),
-            '###SCORE###':              c['score'],
+            '###SCORE###':              str(c['score']) if len(str(c['score'])) > 0 else missing_comment_score_label,
             '###BODY###':               snudown.markdown(c['body'].replace('&gt;','>')),
             '###CSS_CLASSES###':        css_classes,
             '###CLASS_SCORE###':        'badge-danger' if len(c['score']) > 0 and int(c['score']) < 1 else 'badge-secondary',
@@ -302,8 +303,8 @@ def write_link_page(subreddits, link, subreddit='', hide_deleted_comments=False)
         '###ID###':                 link['id'],
         '###DATE###':               created.strftime('%Y-%m-%d'),
         '###ARCHIVE_DATE###':       datetime.utcfromtimestamp(int(link['retrieved_on'])).strftime('%Y-%m-%d') if link['retrieved_on'] != '' else 'n/a',
-        '###SCORE###':              link['score'],
-        '###NUM_COMMENTS###':       link['num_comments'],
+        '###SCORE###':              str(link['score']),
+        '###NUM_COMMENTS###':       str(link['num_comments']),
         '###URL_PROJECT###':        url_project,
         '###URL_SUBS###':           static_include_path + 'index.html',
         '###URL_SUB###':            static_include_path + subreddit + '/index.html',
@@ -428,8 +429,8 @@ def write_user_page(subs, user_index):
                 '###TITLE###':              l['title'],
                 '###URL###':                link_url,
                 '###URL_COMMENTS###':       link_comments_url,
-                '###SCORE###':              l['score'],
-                '###NUM_COMMENTS###':       l['num_comments'] if int(l['num_comments']) > 0 else 0,
+                '###SCORE###':              str(l['score']),
+                '###NUM_COMMENTS###':       str(l['num_comments']) if int(l['num_comments']) > 0 else str(0),
                 '###DATE###':               datetime.utcfromtimestamp(int(l['created_utc'])).strftime('%Y-%m-%d'),
                 '###SUB###':                l['subreddit'],
                 '###SUB_URL###':            '../' + l['subreddit'] + '/index.html',

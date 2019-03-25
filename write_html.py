@@ -616,7 +616,10 @@ def get_subs():
     if not os.path.isdir('data'):
         print('ERROR: no data, run fetch_links.py first')
         return subs
-    return [d.name for d in os.scandir('data') if d.is_dir()]
+    for d in os.listdir('data'):
+        if os.path.isdir('data' + '/' + d):
+            subs.append(d)
+    return subs
 
 def get_pager_html(page_num=1, pages=1):
     html_pager = ''

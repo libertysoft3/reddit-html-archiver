@@ -120,17 +120,17 @@ def write_links(subreddit, links):
                 filename = 'links.csv'
                 filepath = path + '/' + filename
                 if not os.path.isfile(filepath):
-                    file = open(filepath, 'a')
+                    file = open(filepath, 'a', encoding='utf-8')
                     writer = csv.DictWriter(file, fieldnames=link_fields)
                     writer.writeheader()
                     # print('created %s' % filepath)
                 else:
-                    with open(filepath, 'r') as file:
+                    with open(filepath, 'r', encoding='utf-8') as file:
                         reader = csv.DictReader(file)
                         for row in reader:
                             existing_link_ids.append(row['id'])
 
-                    file = open(filepath, 'a')
+                    file = open(filepath, 'a', encoding='utf-8')
                     writer = csv.DictWriter(file, fieldnames=link_fields)
 
             # create and parse existing comments
@@ -138,17 +138,17 @@ def write_links(subreddit, links):
             filename = r['id'] + '.csv'
             filepath = path + '/' + filename
             if not os.path.isfile(filepath):
-                comments_file = open(filepath, 'a')
+                comments_file = open(filepath, 'a', encoding='utf-8')
                 comments_writer = csv.DictWriter(comments_file, fieldnames=comment_fields)
                 comments_writer.writeheader()
                 # print('created %s' % filepath)
             else:
-                with open(filepath, 'r') as comments_file:
+                with open(filepath, 'r', encoding='utf-8') as comments_file:
                     reader = csv.DictReader(comments_file)
                     for row in reader:
                         existing_comment_ids.append(row['id'])
 
-                comments_file = open(filepath, 'a')
+                comments_file = open(filepath, 'a', encoding='utf-8')
                 comments_writer = csv.DictWriter(comments_file, fieldnames=comment_fields)
 
             # write link row

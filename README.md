@@ -61,11 +61,13 @@ This will resolve errors encoding errors such as 'codec can't encode character'.
   * media posts
   * score update
   * scores from reddit with [praw](https://github.com/praw-dev/praw)
-* view on reddit.com
 * real templating
 * filter output per sub, individual min score and comments filters
 * js markdown url previews
 * js powered search page, show no links by default
+* link and comments pages
+  * view on reddit.com
+  * show link domains
 * user pages
   * add pagination, posts sorted by score, comments, date, sub
   * too many files in one directory

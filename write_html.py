@@ -33,63 +33,63 @@ sort_indexes = {
 missing_comment_score_label = 'n/a'
 
 template_index = ''
-with open('templates/index.html', 'r') as file:
+with open('templates/index.html', 'r', encoding='utf-8') as file:
     template_index = file.read()
 
 template_subreddit = ''
-with open('templates/subreddit.html', 'r') as file:
+with open('templates/subreddit.html', 'r', encoding='utf-8') as file:
     template_subreddit = file.read()
 
 template_link = ''
-with open('templates/link.html', 'r') as file:
+with open('templates/link.html', 'r', encoding='utf-8') as file:
     template_link = file.read()
 
 template_comment = ''
-with open('templates/partial_comment.html', 'r') as file:
+with open('templates/partial_comment.html', 'r', encoding='utf-8') as file:
     template_comment = file.read()
 
 template_search = ''
-with open('templates/search.html', 'r') as file:
+with open('templates/search.html', 'r', encoding='utf-8') as file:
     template_search = file.read()
 
 template_user = ''
-with open('templates/user.html', 'r') as file:
+with open('templates/user.html', 'r', encoding='utf-8') as file:
     template_user = file.read()
 
 template_sub_link = ''
-with open('templates/partial_menu_item.html', 'r') as file:
+with open('templates/partial_menu_item.html', 'r', encoding='utf-8') as file:
     template_sub_link = file.read()
 
 template_user_url = ''
-with open('templates/partial_user.html', 'r') as file:
+with open('templates/partial_user.html', 'r', encoding='utf-8') as file:
     template_user_url = file.read()
 
 template_link_url = ''
-with open('templates/partial_link.html', 'r') as file:
+with open('templates/partial_link.html', 'r', encoding='utf-8') as file:
     template_link_url = file.read()
 
 template_search_link = ''
-with open('templates/partial_search_link.html', 'r') as file:
+with open('templates/partial_search_link.html', 'r', encoding='utf-8') as file:
     template_search_link = file.read()
 
 template_index_sub = ''
-with open('templates/partial_index_subreddit.html', 'r') as file:
+with open('templates/partial_index_subreddit.html', 'r', encoding='utf-8') as file:
     template_index_sub = file.read()
 
 template_index_pager_link = ''
-with open('templates/partial_subreddit_pager_link.html', 'r') as file:
+with open('templates/partial_subreddit_pager_link.html', 'r', encoding='utf-8') as file:
     template_index_pager_link = file.read()
 
 template_selftext = ''
-with open('templates/partial_link_selftext.html', 'r') as file:
+with open('templates/partial_link_selftext.html', 'r', encoding='utf-8') as file:
     template_selftext = file.read()
 
 template_user_page_link = ''
-with open('templates/partial_user_link.html', 'r') as file:
+with open('templates/partial_user_link.html', 'r', encoding='utf-8') as file:
     template_user_page_link = file.read()
 
 teplate_url = ''
-with open('templates/partial_url.html', 'r') as file:
+with open('templates/partial_url.html', 'r', encoding='utf-8') as file:
     template_url = file.read()
 
 def generate_html(min_score=0, min_comments=0, hide_deleted_comments=False):
@@ -222,7 +222,7 @@ def write_subreddit_pages(subreddit, subs, link_index, stat_sub_filtered_links, 
                 filepath = 'r/' + subreddit + '/index-' + sort_indexes[sort]['slug'] + '/' + filename
             if not os.path.isfile(filepath):
                 os.makedirs(os.path.dirname(filepath), exist_ok=True)
-                with open(filepath, 'w') as file:
+                with open(filepath, 'w', encoding='utf-8') as file:
                     file.write(page_html)
                     # print('wrote %s %s, %s links' % (sort, filepath, len(page)))
 
@@ -329,7 +329,7 @@ def write_link_page(subreddits, link, subreddit='', hide_deleted_comments=False)
     filepath = filepath.replace(link['id'], idpath)
     if not os.path.isfile(filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w', encoding='utf-8') as file:
             file.write(html)
         # print('wrote %s %s' % (created.strftime('%Y-%m-%d'), filepath))
 
@@ -391,7 +391,7 @@ def write_subreddit_search_page(subreddit, subs, link_index, stat_sub_filtered_l
     filepath = 'r/' + subreddit + '/' + filename
     if not os.path.isfile(filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w', encoding='utf-8') as file:
             file.write(page_html)
             # print('wrote %s, %s links' % (filepath, len(links)))
     return True
@@ -458,7 +458,7 @@ def write_user_page(subs, user_index):
         filepath = 'r/user/' + user + '.html'
         if not os.path.isfile(filepath):
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            with open(filepath, 'w') as file:
+            with open(filepath, 'w', encoding='utf-8') as file:
                 file.write(page_html)
             # print('wrote %s' % (filepath))
 
@@ -494,7 +494,7 @@ def write_index(subs):
     filepath = 'r/index.html'
     if not os.path.isfile(filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w', encoding='utf-8') as file:
             file.write(page_html)
         # print('wrote %s' % (filepath))
 
@@ -597,13 +597,13 @@ def load_links(date, subreddit):
     daily_links_path = daily_path + '/' + source_data_links
     if os.path.isfile(daily_links_path):
         links = []
-        with open(daily_links_path, 'r') as links_file:
+        with open(daily_links_path, 'r', encoding='utf-8') as links_file:
             reader = csv.DictReader(links_file)
             for link_row in reader:
                 comments = []
                 comments_file_path = daily_path + '/' + link_row['id'] + '.csv'
                 if os.path.isfile(comments_file_path):
-                    with open(comments_file_path, 'r') as comments_file:
+                    with open(comments_file_path, 'r', encoding='utf-8') as comments_file:
                         reader = csv.DictReader(comments_file)
                         for comment_row in reader:
                             comments.append(comment_row)

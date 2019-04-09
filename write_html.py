@@ -163,7 +163,7 @@ def write_subreddit_pages(subreddit, subs, link_index, stat_sub_filtered_links, 
                 author_link_html = author_link_html.replace('###URL_AUTHOR###', author_url).replace('###AUTHOR###', l['author'])
 
                 link_url = l['url']
-                link_comments_url = sort_based_prefix + l['permalink'].strip('/')
+                link_comments_url = sort_based_prefix + l['permalink'].lower().strip('/')
                 link_comments_url = link_comments_url.replace('r/' + subreddit + '/', '')
                 idpath = '/'.join(list(l['id']))
                 link_comments_url = link_comments_url.replace(l['id'], idpath)
@@ -232,7 +232,7 @@ def write_link_page(subreddits, link, subreddit='', hide_deleted_comments=False)
     # reddit:  https://www.reddit.com/r/conspiracy/comments/8742iv/happening_now_classmate_former_friend_of/
     # archive: r/conspiracy/comments/8/7/4/2/i/v/happening_now_classmate_former_friend_of.html
     idpath = '/'.join(list(link['id']))
-    filepath = link['permalink'].strip('/') + '.html'
+    filepath = link['permalink'].lower().strip('/') + '.html'
     filepath = filepath.replace(link['id'], idpath)
     if os.path.isfile(filepath):
         return True
@@ -325,7 +325,7 @@ def write_link_page(subreddits, link, subreddit='', hide_deleted_comments=False)
     # reddit:  https://www.reddit.com/r/conspiracy/comments/8742iv/happening_now_classmate_former_friend_of/
     # archive: r/conspiracy/comments/8/7/4/2/i/v/happening_now_classmate_former_friend_of.html
     idpath = '/'.join(list(link['id']))
-    filepath = link['permalink'].strip('/') + '.html'
+    filepath = link['permalink'].lower().strip('/') + '.html'
     filepath = filepath.replace(link['id'], idpath)
     if not os.path.isfile(filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
@@ -350,7 +350,7 @@ def write_subreddit_search_page(subreddit, subs, link_index, stat_sub_filtered_l
 
     links_html = ''
     for l in links:
-        link_comments_url = l['permalink'].strip('/').replace('r/' + subreddit + '/', '')
+        link_comments_url = l['permalink'].lower().strip('/').replace('r/' + subreddit + '/', '')
         idpath = '/'.join(list(l['id']))
         link_comments_url = link_comments_url.replace(l['id'], idpath)
         link_comments_url += '.html'
@@ -417,7 +417,7 @@ def write_user_page(subs, user_index):
             author_url = l['author'] + '.html'
             author_link_html = author_link_html.replace('###URL_AUTHOR###', author_url).replace('###AUTHOR###', l['author'])
 
-            link_comments_url = '../' + l['permalink'].strip('/').strip('r/')
+            link_comments_url = '../' + l['permalink'].lower().strip('/').strip('r/')
             idpath = '/'.join(list(l['id']))
             link_comments_url = link_comments_url.replace(l['id'], idpath)
             link_comments_url += '.html'
@@ -618,7 +618,7 @@ def get_subs():
         return subs
     for d in os.listdir('data'):
         if os.path.isdir('data' + '/' + d):
-            subs.append(d)
+            subs.append(d.lower())
     return subs
 
 def get_pager_html(page_num=1, pages=1):

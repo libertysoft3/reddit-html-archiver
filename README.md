@@ -16,6 +16,13 @@ requires python 3 on linux, OSX, or Windows
     cd reddit-html-archiver
     chmod u+x *.py
 
+Windows users may need to run
+
+    chcp 65001
+    set PYTHONIOENCODING=utf-8
+
+before running `fetch_links.py` or `write_html.py` to resolve encoding errors such as 'codec can't encode character'.
+
 ### fetch reddit data
 
 data is fetched by subreddit and date range and is stored as csv files in `data`.
@@ -44,15 +51,6 @@ to update an html archive, delete everything in `r` aside from `r/static` and re
 
 copy the contents of the `r` directory to a web root or appropriately served git repo.
 
-### Windows users
-
-Windows users may need to run the following before running `fetch_links.py` or `write_html.py`:
-
-    chcp 65001
-    set PYTHONIOENCODING=utf-8
-
-This will resolve errors encoding errors such as 'codec can't encode character'.
-
 ### potential improvements
 
 * fetch_links
@@ -62,15 +60,16 @@ This will resolve errors encoding errors such as 'codec can't encode character'.
   * score update
   * scores from reddit with [praw](https://github.com/praw-dev/praw)
 * real templating
-* filter output per sub, individual min score and comments filters
-* js markdown url previews
-* js powered search page, show no links by default
-* link and comments pages
-  * view on reddit.com
-  * show link domains
+* choose [Bootswatch](https://bootswatch.com/) theme
+* specify subreddits to output
+* show link domain/post type
 * user pages
   * add pagination, posts sorted by score, comments, date, sub
   * too many files in one directory
+* view on reddit.com
+* js powered search page, show no links by default
+* js inline media embeds/expandos
+* archive.org links
 
 ### see also
 

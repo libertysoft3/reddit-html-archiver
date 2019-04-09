@@ -214,4 +214,6 @@ if __name__ == '__main__':
     if args.self_only:
         self_only = True
 
+    args.subreddit = args.subreddit.lower()
+
     fetch_links(args.subreddit, args.date_start, args.date_stop, args.limit, args.score, self_only)

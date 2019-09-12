@@ -417,7 +417,8 @@ def write_user_page(subs, user_index):
             author_url = l['author'] + '.html'
             author_link_html = author_link_html.replace('###URL_AUTHOR###', author_url).replace('###AUTHOR###', l['author'])
 
-            link_comments_url = '../' + l['permalink'].lower().strip('/').strip('r/')
+            link_comments_url = l['permalink'].lower().replace('/r/', '').strip('/')
+            link_comments_url = '../' + link_comments_url
             idpath = '/'.join(list(l['id']))
             link_comments_url = link_comments_url.replace(l['id'], idpath)
             link_comments_url += '.html'
@@ -542,7 +543,7 @@ def sort_comments(comments, hide_deleted_comments=False):
 
     # add orphaned comments
     for c in comments:
-        if c['parent_id'] != link_id and c['parent_id'].strip('t1_') not in id_map.keys():
+        if c['parent_id'] != link_id and c['parent_id'].replace('t1_', '') not in id_map.keys():
             if hide_deleted_comments and c['body'] in removed_content_identifiers:
                 continue
             sorted_linear_comments.append(c)

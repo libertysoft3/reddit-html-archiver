@@ -1,6 +1,6 @@
 ## reddit html archiver
 
-pulls reddit data from the [pushshift](https://github.com/pushshift/api) api and renders offline compatible html pages
+pulls reddit data from the [pushshift](https://github.com/pushshift/api) api and renders offline compatible html pages. uses the reddit markdown renderer.
 
 ### install
 
@@ -28,19 +28,21 @@ before running `fetch_links.py` or `write_html.py` to resolve encoding errors su
 data is fetched by subreddit and date range and is stored as csv files in `data`.
 
     ./fetch_links.py politics 2017-1-1 2017-2-1
-    # or add some link/post request filters
+    # or add some link/post filtering to download less data
     ./fetch_links.py --self_only --score "> 2000" politics 2015-1-1 2016-1-1
+    # show available filters
     ./fetch_links.py -h
 
-you may need decrease your date range or adjust `pushshift_rate_limit_per_minute` in `fetch_links.py` if you are getting connection errors.
+decrease your date range or adjust `pushshift_rate_limit_per_minute` in `fetch_links.py` if you are getting connection errors.
 
 ### write web pages
 
 write html files for all subreddits to `r`.
 
     ./write_html.py
-    # or add some output filtering
+    # or add some output filtering for less fluff or a smaller archive size
     ./write_html.py --min-score 100 --min-comments 100 --hide-deleted-comments
+    # show available filters
     ./write_html.py -h
 
 your html archive has been written to `r`. once you are satisfied with your archive feel free to copy/move the contents of `r` to elsewhere and to delete the git repos you have created. everything in `r` is fully self contained.

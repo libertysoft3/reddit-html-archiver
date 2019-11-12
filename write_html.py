@@ -5,6 +5,7 @@ import csv
 import os
 import re
 import snudown
+import psutil
 
 url_project = 'https://github.com/libertysoft3/reddit-html-archiver'
 links_per_page = 30
@@ -92,45 +93,63 @@ teplate_url = ''
 with open('templates/partial_url.html', 'r', encoding='utf-8') as file:
     template_url = file.read()
 
+process = psutil.Process(os.getpid())
+
 def generate_html(min_score=0, min_comments=0, hide_deleted_comments=False):
     delta = timedelta(days=1)
     subs = get_subs()
-    stat_links = 0
-    stat_filtered_links = 0
     user_index = {}
     processed_subs = []
+    stat_links = 0
+    stat_filtered_links = 0
 
     for sub in subs:
-        d = start_date
-        sub_links = []
+        # write link pages
+        # print('generate_html() processing %s %s kb' % (sub, int(int(process.memory_info().rss) / 1024)))
         stat_sub_links = 0
         stat_sub_filtered_links = 0
         stat_sub_comments = 0
+        d = start_date
         while d <= end_date:
-            raw_links = load_links(d, sub)
-            # print ('processing %s %s %s links' % (sub, d.strftime("%Y-%m-%d"), len(sub_links)))
+            raw_links = load_links(d, sub, True)
             stat_links += len(raw_links)
             stat_sub_links += len(raw_links)
             for l in raw_links:
                 if validate_link(l, min_score, min_comments):
+                    write_link_page(subs, l, sub, hide_deleted_comments)
                     stat_filtered_links += 1
                     stat_sub_filtered_links += 1
-                    stat_sub_comments += len('comments')
-                    sub_links.append(l)
-                    if l['author'] not in user_index.keys():
-                        user_index[l['author']] = []
-                    l['subreddit'] = sub
-                    user_index[l['author']].append(l)
-                    # TODO: return comments written
-                    write_link_page(subs, l, sub, hide_deleted_comments)
+                    if 'comments' in l:
+                        stat_sub_comments += len(l['comments'])
             d += delta
         if stat_sub_filtered_links > 0:
             processed_subs.append({'name': sub, 'num_links': stat_sub_filtered_links})
-        write_subreddit_pages(sub, subs, sub_links, stat_sub_filtered_links, stat_sub_comments)
-        write_subreddit_search_page(sub, subs, sub_links, stat_sub_filtered_links, stat_sub_comments)
         print('%s: %s links filtered to %s' % (sub, stat_sub_links, stat_sub_filtered_links))
-    write_index(processed_subs)
+
+        # write subreddit pages
+        valid_sub_links = []
+        d = start_date
+        while d <= end_date:
+            raw_links = load_links(d, sub)
+            for l in raw_links:
+                if validate_link(l, min_score, min_comments):
+                    valid_sub_links.append(l)
+
+                # collect links for user pages
+                # TODO: this is the least performant bit. load and generate user pages user by user instead.
+                l['subreddit'] = sub
+                if l['author'] not in user_index.keys():
+                    user_index[l['author']] = []
+                user_index[l['author']].append(l)
+            d += delta
+        write_subreddit_pages(sub, subs, valid_sub_links, stat_sub_filtered_links, stat_sub_comments)
+        write_subreddit_search_page(sub, subs, valid_sub_links, stat_sub_filtered_links, stat_sub_comments)
+
+    # write user pages
     write_user_page(processed_subs, user_index)
+
+    # write index page
+    write_index(processed_subs)
     print('all done. %s links filtered to %s' % (stat_links, stat_filtered_links))
 
 def write_subreddit_pages(subreddit, subs, link_index, stat_sub_filtered_links, stat_sub_comments):
@@ -178,7 +197,7 @@ def write_subreddit_pages(subreddit, subs, link_index, stat_sub_filtered_links, 
                     '###SCORE###':              str(l['score']),
                     '###NUM_COMMENTS###':       l['num_comments'] if int(l['num_comments']) > 0 else str(0),
                     '###DATE###':               datetime.utcfromtimestamp(int(l['created_utc'])).strftime('%Y-%m-%d'),
-                    '###LINK_DOMAIN###':        '(self.' + l['subreddit'] + ')' if l['is_self'] is True or l['is_self'] == 'True' else '',
+                    '###LINK_DOMAIN###':        '(self.' + subreddit + ')' if l['is_self'] is True or l['is_self'] == 'True' else '',
                     '###HTML_AUTHOR_URL###':    author_link_html,
                 }
                 link_html = template_link_url
@@ -502,8 +521,6 @@ def write_index(subs):
     return True
 
 # a 'top' comments sort with orphaned comments (incomplete data) rendered last
-# only remove deleted comments if no children
-# 
 def sort_comments(comments, hide_deleted_comments=False):
     sorted_comments = []
     if len(comments) == 0:
@@ -533,6 +550,7 @@ def sort_comments(comments, hide_deleted_comments=False):
     # add each top level comment's child comments
     sorted_linear_comments = []
     for c in sorted_comments:
+        # only remove deleted comments if no children
         if hide_deleted_comments and c['body'] in removed_content_identifiers and 't1_' + c['id'] not in parent_map.values():
             pass
         else:
@@ -577,6 +595,7 @@ def validate_link(link, min_score=0, min_comments=0):
     elif not 'id' in link.keys():
         return False
     # apply multiple conditions as an OR, keep high score low comments and high comment low score links/posts
+    # TODO this should be configurable
     if min_score > 0 and min_comments > 0:
         if int(link['score']) < min_score and int(link['num_comments']) < min_comments:
             return False
@@ -588,7 +607,7 @@ def validate_link(link, min_score=0, min_comments=0):
 
     return True
 
-def load_links(date, subreddit):
+def load_links(date, subreddit, with_comments=False):
     links = []
     if not date or not subreddit:
         return links
@@ -601,14 +620,15 @@ def load_links(date, subreddit):
         with open(daily_links_path, 'r', encoding='utf-8') as links_file:
             reader = csv.DictReader(links_file)
             for link_row in reader:
-                comments = []
-                comments_file_path = daily_path + '/' + link_row['id'] + '.csv'
-                if os.path.isfile(comments_file_path):
-                    with open(comments_file_path, 'r', encoding='utf-8') as comments_file:
-                        reader = csv.DictReader(comments_file)
-                        for comment_row in reader:
-                            comments.append(comment_row)
-                link_row['comments'] = comments
+                if with_comments:
+                    comments = []
+                    comments_file_path = daily_path + '/' + link_row['id'] + '.csv'
+                    if os.path.isfile(comments_file_path):
+                        with open(comments_file_path, 'r', encoding='utf-8') as comments_file:
+                            reader = csv.DictReader(comments_file)
+                            for comment_row in reader:
+                                comments.append(comment_row)
+                    link_row['comments'] = comments
                 links.append(link_row)
     return links
 

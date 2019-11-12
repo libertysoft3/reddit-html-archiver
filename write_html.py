@@ -135,12 +135,12 @@ def generate_html(min_score=0, min_comments=0, hide_deleted_comments=False):
                 if validate_link(l, min_score, min_comments):
                     valid_sub_links.append(l)
 
-                # collect links for user pages
-                # TODO: this is the least performant bit. load and generate user pages user by user instead.
-                l['subreddit'] = sub
-                if l['author'] not in user_index.keys():
-                    user_index[l['author']] = []
-                user_index[l['author']].append(l)
+                    # collect links for user pages
+                    # TODO: this is the least performant bit. load and generate user pages user by user instead.
+                    l['subreddit'] = sub
+                    if l['author'] not in user_index.keys():
+                        user_index[l['author']] = []
+                    user_index[l['author']].append(l)
             d += delta
         write_subreddit_pages(sub, subs, valid_sub_links, stat_sub_filtered_links, stat_sub_comments)
         write_subreddit_search_page(sub, subs, valid_sub_links, stat_sub_filtered_links, stat_sub_comments)

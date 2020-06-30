@@ -6,26 +6,26 @@ pulls reddit data from the [pushshift](https://github.com/pushshift/api) api and
 
 requires python 3 on linux, OSX, or Windows
 
-    sudo apt-get install pip
-    pip install psaw
-    git clone https://github.com/chid/snudown
-    cd snudown
-    sudo python setup.py install
-    cd ..
-    git clone [this repo]
-    cd reddit-html-archiver
-    chmod u+x *.py
+    $ sudo apt-get install pip
+    $ pip install psaw
+    $ git clone https://github.com/chid/snudown
+    $ cd snudown
+    $ sudo python setup.py install
+    $ cd ..
+    $ git clone [this repo]
+    $ cd reddit-html-archiver
+    $ chmod u+x *.py
 
 Windows users may need to run
 
-    chcp 65001
-    set PYTHONIOENCODING=utf-8
+    > chcp 65001
+    > set PYTHONIOENCODING=utf-8
 
 before running `fetch_links.py` or `write_html.py` to resolve encoding errors such as 'codec can't encode character'.
 
 ### fetch reddit data
 
-data is fetched by subreddit and date range and is stored as csv files in `data`. You may need to explicitly run the script python3 if it is not the default on your system.
+data is fetched by subreddit and date range and is stored as csv files in `data`. You may need to explicitly run the script with python3 if it is not the default on your system.
 
     $ python3 ./fetch_links.py politics 2017-1-1 2017-2-1
     # or add some link/post filtering to download less data

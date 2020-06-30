@@ -80,6 +80,7 @@ copy the contents of the `r` directory to a web root or appropriately served git
 * [snudown](https://github.com/reddit/snudown)
 * [redditsearch.io](https://redditsearch.io/)
 * [reddit post archiver](https://github.com/sJohnsonStoever/redditPostArchiver)
+* [reddit downloader](https://github.com/shadowmoose/RedditDownloader)
 
 ### screenshots
 

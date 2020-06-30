@@ -25,13 +25,13 @@ before running `fetch_links.py` or `write_html.py` to resolve encoding errors su
 
 ### fetch reddit data
 
-data is fetched by subreddit and date range and is stored as csv files in `data`.
+data is fetched by subreddit and date range and is stored as csv files in `data`. You may need to explicitly run the script python3 if it is not the default on your system.
 
-    ./fetch_links.py politics 2017-1-1 2017-2-1
+    $ python3 ./fetch_links.py politics 2017-1-1 2017-2-1
     # or add some link/post filtering to download less data
-    ./fetch_links.py --self_only --score "> 2000" politics 2015-1-1 2016-1-1
+    $ ./fetch_links.py --self_only --score "> 2000" politics 2015-1-1 2016-1-1
     # show available filters
-    ./fetch_links.py -h
+    $ ./fetch_links.py -h
 
 decrease your date range or adjust `pushshift_rate_limit_per_minute` in `fetch_links.py` if you are getting connection errors.
 
@@ -39,11 +39,11 @@ decrease your date range or adjust `pushshift_rate_limit_per_minute` in `fetch_l
 
 write html files for all subreddits to `r`.
 
-    ./write_html.py
+    $ ./write_html.py
     # or add some output filtering for less fluff or a smaller archive size
-    ./write_html.py --min-score 100 --min-comments 100 --hide-deleted-comments
+    $ ./write_html.py --min-score 100 --min-comments 100 --hide-deleted-comments
     # show available filters
-    ./write_html.py -h
+    $ ./write_html.py -h
 
 your html archive has been written to `r`. once you are satisfied with your archive feel free to copy/move the contents of `r` to elsewhere and to delete the git repos you have created. everything in `r` is fully self contained.
 

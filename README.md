@@ -4,7 +4,9 @@ pulls reddit data from the [pushshift](https://github.com/pushshift/api) api and
 
 ### install
 
-requires python 3 on linux, OSX, or Windows. warning: if `$ python --version` outputs a python 2 version, then replace all occurances of `python` with `python3` in the commands below.
+requires python 3 on linux, OSX, or Windows. 
+
+**warning:** if `$ python --version` outputs a python 2 version on your system, then you need to replace all occurances of `python` with `python3` in the commands below.
 
     $ sudo apt-get install pip
     $ pip install psaw -U

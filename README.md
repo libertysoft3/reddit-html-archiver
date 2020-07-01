@@ -7,7 +7,7 @@ pulls reddit data from the [pushshift](https://github.com/pushshift/api) api and
 requires python 3 on linux, OSX, or Windows. warning: if `$ python --version` outputs a python 2 version, then replace all occurances of `python` with `python3` in the commands below.
 
     $ sudo apt-get install pip
-    $ pip install psaw
+    $ pip install psaw -U
     $ git clone https://github.com/chid/snudown
     $ cd snudown
     $ sudo python setup.py install

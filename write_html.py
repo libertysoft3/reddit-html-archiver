@@ -620,7 +620,7 @@ def load_links(date, subreddit, with_comments=False):
         with open(daily_links_path, 'r', encoding='utf-8') as links_file:
             reader = csv.DictReader(links_file)
             for link_row in reader:
-                if with_comments:
+                if with_comments and 'id' in link_row.keys():
                     comments = []
                     comments_file_path = daily_path + '/' + link_row['id'] + '.csv'
                     if os.path.isfile(comments_file_path):
